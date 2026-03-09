@@ -4,7 +4,7 @@
  */
 
 
-var AtomParser=class AtomParser  {
+export class AtomParser {
     constructor(xmlBase){
         this.Items =[];
         this.Title ='';

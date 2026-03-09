@@ -1,4 +1,4 @@
-# WebFeed GNOME Shell extension translation template
+# Simplified Chinese translation for WebFeed GNOME Shell extension
 # Copyright (C) 2024 WebFeed contributors
 # This file is distributed under the same license as the WebFeed package.
 #
@@ -7,114 +7,115 @@ msgstr ""
 "Project-Id-Version: webfeed 9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-01 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-12-01 00:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: extension.js
 msgid "( "
-msgstr ""
+msgstr "（"
 
 #: extension.js
 msgid "H ago) "
-msgstr ""
+msgstr "小时前）"
 
 #: extension.js
 msgid "No data available"
-msgstr ""
+msgstr "暂无数据"
 
 #: extension.js
 msgid " has not responded "
-msgstr ""
+msgstr " 未响应"
 
 #: extension.js
 msgid "Last update"
-msgstr ""
+msgstr "上次更新"
 
 #: prefs.js
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: prefs.js
 msgid "Timing"
-msgstr ""
+msgstr "定时"
 
 #: prefs.js
 msgid "Update interval (minutes)"
-msgstr ""
+msgstr "更新间隔（分钟）"
 
 #: prefs.js
 msgid "0 = manual only"
-msgstr ""
+msgstr "0 = 仅手动"
 
 #: prefs.js
 msgid "Waiting delay for response (seconds)"
-msgstr ""
+msgstr "等待响应时间（秒）"
 
 #: prefs.js
 msgid "Display"
-msgstr ""
+msgstr "显示"
 
 #: prefs.js
 msgid "RSS sources per page"
-msgstr ""
+msgstr "每页RSS源数"
 
 #: prefs.js
 msgid "Erase after (hours)"
-msgstr ""
+msgstr "清除时间（小时）"
 
 #: prefs.js
 msgid "Notifications"
-msgstr ""
+msgstr "通知"
 
 #: prefs.js
 msgid "Duration of news (minutes)"
-msgstr ""
+msgstr "新闻时效（分钟）"
 
 #: prefs.js
 msgid "Notification on news"
-msgstr ""
+msgstr "新闻通知"
 
 #: prefs.js
 msgid "Feeds"
-msgstr ""
+msgstr "订阅源"
 
 #: prefs.js
 msgid "Feed sources"
-msgstr ""
+msgstr "订阅源列表"
 
 #: prefs.js
 msgid "Add Feed"
-msgstr ""
+msgstr "添加订阅"
 
 #: prefs.js
 msgid "New Feed source"
-msgstr ""
+msgstr "新订阅源"
 
 #: prefs.js
 msgid "Enter feed URL:"
-msgstr ""
+msgstr "输入订阅URL："
 
 #: prefs.js
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: prefs.js
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: prefs.js
 msgid "Edit Feed source"
-msgstr ""
+msgstr "编辑订阅源"
 
 #: prefs.js
 msgid "Edit feed URL:"
-msgstr ""
+msgstr "修改订阅URL："
 
 #: prefs.js
 msgid "Save"
-msgstr ""
+msgstr "保存"

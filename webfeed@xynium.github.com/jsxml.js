@@ -35,7 +35,7 @@
 ///////////////////////////////////////////////////////////////
 
 
-function REXML(XML) {
+export function REXML(XML) {
 	this.XML = XML;
 
 	this.rootElement = null;

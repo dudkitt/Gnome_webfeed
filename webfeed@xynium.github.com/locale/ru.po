@@ -1,4 +1,4 @@
-# WebFeed GNOME Shell extension translation template
+# Russian translation for WebFeed GNOME Shell extension
 # Copyright (C) 2024 WebFeed contributors
 # This file is distributed under the same license as the WebFeed package.
 #
@@ -7,114 +7,115 @@ msgstr ""
 "Project-Id-Version: webfeed 9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-01 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-12-01 00:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Russian\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: extension.js
 msgid "( "
-msgstr ""
+msgstr "( "
 
 #: extension.js
 msgid "H ago) "
-msgstr ""
+msgstr "ч назад) "
 
 #: extension.js
 msgid "No data available"
-msgstr ""
+msgstr "Нет данных"
 
 #: extension.js
 msgid " has not responded "
-msgstr ""
+msgstr " не ответил "
 
 #: extension.js
 msgid "Last update"
-msgstr ""
+msgstr "Обновлено"
 
 #: prefs.js
 msgid "General"
-msgstr ""
+msgstr "Основные"
 
 #: prefs.js
 msgid "Timing"
-msgstr ""
+msgstr "Таймеры"
 
 #: prefs.js
 msgid "Update interval (minutes)"
-msgstr ""
+msgstr "Интервал обновления (минуты)"
 
 #: prefs.js
 msgid "0 = manual only"
-msgstr ""
+msgstr "0 = только вручную"
 
 #: prefs.js
 msgid "Waiting delay for response (seconds)"
-msgstr ""
+msgstr "Ожидание ответа (секунды)"
 
 #: prefs.js
 msgid "Display"
-msgstr ""
+msgstr "Отображение"
 
 #: prefs.js
 msgid "RSS sources per page"
-msgstr ""
+msgstr "Источников на странице"
 
 #: prefs.js
 msgid "Erase after (hours)"
-msgstr ""
+msgstr "Удалять через (часы)"
 
 #: prefs.js
 msgid "Notifications"
-msgstr ""
+msgstr "Уведомления"
 
 #: prefs.js
 msgid "Duration of news (minutes)"
-msgstr ""
+msgstr "Срок новости (минуты)"
 
 #: prefs.js
 msgid "Notification on news"
-msgstr ""
+msgstr "Уведомлять о новостях"
 
 #: prefs.js
 msgid "Feeds"
-msgstr ""
+msgstr "Ленты"
 
 #: prefs.js
 msgid "Feed sources"
-msgstr ""
+msgstr "Источники лент"
 
 #: prefs.js
 msgid "Add Feed"
-msgstr ""
+msgstr "Добавить ленту"
 
 #: prefs.js
 msgid "New Feed source"
-msgstr ""
+msgstr "Новый источник"
 
 #: prefs.js
 msgid "Enter feed URL:"
-msgstr ""
+msgstr "Введите URL ленты:"
 
 #: prefs.js
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: prefs.js
 msgid "Add"
-msgstr ""
+msgstr "Добавить"
 
 #: prefs.js
 msgid "Edit Feed source"
-msgstr ""
+msgstr "Редактировать источник"
 
 #: prefs.js
 msgid "Edit feed URL:"
-msgstr ""
+msgstr "Измените URL ленты:"
 
 #: prefs.js
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"

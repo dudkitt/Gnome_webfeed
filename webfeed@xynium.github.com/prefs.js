@@ -1,210 +1,277 @@
 /*
  * WebFeed extension for GNOME Shell
- * Xynium September 2022
+ * Xynium — GNOME 49 ES Modules / Adw
  */
-'use strict';
-const {  Gio, Gtk ,GObject} = imports.gi;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Gettext = imports.gettext.domain('WebFeed');
-const _ = Gettext.gettext;
 
-const COLUMN_ID = 0;
-const MAX_UPDATE_INTERVAL = 1440;
+// GI imports (GTK4 + libadwaita for preferences UI)
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import Adw from 'gi://Adw';
 
+// Preferences base class and i18n (GNOME 45+)
+import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+
+// GSettings keys
 const RSS_FEEDS_LIST_KEY = 'rss-feeds-list';
 const UPDATE_INTERVAL_KEY = 'update-interval';
 const ITEMS_VISIBLE_KEY = 'items-visible';
-const DELETE_AFTER = "delete-after"
-const OKFORNOTIF ="okfornotif";
-const DURHOTISHOT =  "durationhotitem";
-const DLYFORRX ="delayforreceive";
+const DELETE_AFTER = 'delete-after';
+const OKFORNOTIF = 'okfornotif';
+const DURHOTISHOT = 'durationhotitem';
+const DLYFORRX = 'delayforreceive';
 
+// Preferences window using Adw.PreferencesWindow (GNOME 45+ pattern)
+export default class WebFeedPreferences extends ExtensionPreferences {
+    fillPreferencesWindow(window) {
+        const settings = this.getSettings();
 
-function init() {
-    ExtensionUtils.initTranslations('WebFeed');
-}
+        // --- Page: General ---
+        const page = new Adw.PreferencesPage({
+            title: _('General'),
+            icon_name: 'preferences-system-symbolic',
+        });
+        window.add(page);
 
+        // --- Group: Timing ---
+        const timingGroup = new Adw.PreferencesGroup({
+            title: _('Timing'),
+        });
+        page.add(timingGroup);
 
-function buildPrefsWidget () {
-     return new PrefsWebFeed();
-}
-    
-    
-    
- 
-const PrefsWebFeed = GObject.registerClass(
- class PrefsWebFeed extends Gtk.Box {
+        // Update interval
+        const updateRow = new Adw.ActionRow({
+            title: _('Update interval (minutes)'),
+            subtitle: _('0 = manual only'),
+        });
+        const updateSpin = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({lower: 0, upper: 1440, step_increment: 1, page_increment: 10}),
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(UPDATE_INTERVAL_KEY, updateSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        updateRow.add_suffix(updateSpin);
+        timingGroup.add(updateRow);
 
-    _init(params = {}) {
-        super._init(params);
+        // Waiting delay for response
+        const rxDlyRow = new Adw.ActionRow({
+            title: _('Waiting delay for response (seconds)'),
+        });
+        const rxDlySpin = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({lower: 1, upper: 360, step_increment: 1, page_increment: 10}),
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(DLYFORRX, rxDlySpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        rxDlyRow.add_suffix(rxDlySpin);
+        timingGroup.add(rxDlyRow);
 
-            this.settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.webfeed');
-            let builder = new Gtk.Builder();
-            builder.set_translation_domain('WebFeed');
-            builder.add_from_file(Me.path + '/prefs.ui');
+        // --- Group: Display ---
+        const displayGroup = new Adw.PreferencesGroup({
+            title: _('Display'),
+        });
+        page.add(displayGroup);
 
-            // update interval
-            let widjet0= builder.get_object("spbt1");
-            widjet0.set_range(0, MAX_UPDATE_INTERVAL);
-            this.settings.bind(UPDATE_INTERVAL_KEY, widjet0, 'value', Gio.SettingsBindFlags.DEFAULT);
-                
-            // items visible per page
-            let widjet1 = builder.get_object('spbt2');
-            this.settings.bind(ITEMS_VISIBLE_KEY, widjet1, 'value', Gio.SettingsBindFlags.DEFAULT);
-                
-            // delete after
-            let widjet3 = builder.get_object('spbtn3');
-            this.settings.bind(DELETE_AFTER, widjet3, 'value', Gio.SettingsBindFlags.DEFAULT);
-                
-            // delais rx
-            let widjet4 = builder.get_object('spbtnRxDly');
-            this.settings.bind(DLYFORRX, widjet4, 'value', Gio.SettingsBindFlags.DEFAULT);
+        // Items visible per page
+        const itemsRow = new Adw.ActionRow({
+            title: _('RSS sources per page'),
+        });
+        const itemsSpin = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({lower: 1, upper: 50, step_increment: 1, page_increment: 10}),
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(ITEMS_VISIBLE_KEY, itemsSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        itemsRow.add_suffix(itemsSpin);
+        displayGroup.add(itemsRow);
 
-            // delete news
-            let widjet5 = builder.get_object('spindurhot');
-            this.settings.bind(DURHOTISHOT, widjet5, 'value', Gio.SettingsBindFlags.DEFAULT);
+        // Erase after (hours)
+        const eraseRow = new Adw.ActionRow({
+            title: _('Erase after (hours)'),
+        });
+        const eraseSpin = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({lower: 1, upper: 100, step_increment: 1, page_increment: 10}),
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(DELETE_AFTER, eraseSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        eraseRow.add_suffix(eraseSpin);
+        displayGroup.add(eraseRow);
 
-            // switch btn notif
-            let widjet6 = builder.get_object('swNotif');
-            this.settings.bind(OKFORNOTIF, widjet6, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // --- Group: Notifications ---
+        const notifGroup = new Adw.PreferencesGroup({
+            title: _('Notifications'),
+        });
+        page.add(notifGroup);
 
-            //feed sources
-            this.feedstore = builder.get_object('liststore1');
-            this.loadStoreFromsettings( );
+        // Duration of news (minutes)
+        const durRow = new Adw.ActionRow({
+            title: _('Duration of news (minutes)'),
+        });
+        const durSpin = new Gtk.SpinButton({
+            adjustment: new Gtk.Adjustment({lower: 1, upper: 360, step_increment: 1, page_increment: 10}),
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(DURHOTISHOT, durSpin, 'value', Gio.SettingsBindFlags.DEFAULT);
+        durRow.add_suffix(durSpin);
+        notifGroup.add(durRow);
 
-            this.widget2 = builder.get_object('trvFeed');
-            let column = builder.get_object('treeviewcolumn1');
-            let cell = new Gtk.CellRendererText({ editable: false });
-            column.pack_start(cell, true);
-            column.add_attribute(cell, "text", COLUMN_ID);
-            this.widget2.append_column(column);
+        // Notification switch
+        const notifRow = new Adw.ActionRow({
+            title: _('Notification on news'),
+        });
+        const notifSwitch = new Gtk.Switch({
+            valign: Gtk.Align.CENTER,
+        });
+        settings.bind(OKFORNOTIF, notifSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        notifRow.add_suffix(notifSwitch);
+        notifGroup.add(notifRow);
 
-            let delButton =  builder.get_object('delButton');
-            delButton.connect('clicked', ()=>{this.deleteSelected();});
-                
-            let editButton = builder.get_object('editButton');
-            editButton.connect('clicked', ()=>{this.editSelected();});
+        // --- Page: Feeds ---
+        const feedsPage = new Adw.PreferencesPage({
+            title: _('Feeds'),
+            icon_name: 'application-rss+xml-symbolic',
+        });
+        window.add(feedsPage);
 
-            let newButton = builder.get_object('newButton');
-            newButton.connect('clicked',()=>{this.createNew();});
+        const feedsGroup = new Adw.PreferencesGroup({
+            title: _('Feed sources'),
+        });
+        feedsPage.add(feedsGroup);
 
-            return builder.get_object('prefs-container') ;
-        }
+        // Use Gtk.ListBox for reliable add/remove of feed rows
+        // (Adw.PreferencesGroup.remove() does not work for dynamic rows)
+        const listBox = new Gtk.ListBox({
+            selection_mode: Gtk.SelectionMode.NONE,
+            css_classes: ['boxed-list'],
+        });
+        feedsGroup.add(listBox);
 
-            /*  Creates modal dialog new or editing  
-             *  title - dialog title
-             *  text - text in dialog
-             *  onOkButton - callback on OK button clicked     */
-        createDialog(title, text, onOkButton) {
-            let dialog = new Gtk.Dialog({title: title});
-            dialog.set_modal(true);
-            dialog.set_resizable(true);
+        // Rebuild feed list from settings; remove_all() clears the ListBox
+        const _rebuildFeedRows = () => {
+            listBox.remove_all();
 
-            let _entry = new Gtk.Entry({text: text});
-            _entry.margin_bottom = 12;
-            _entry.width_chars = 80;
-            _entry.activates_default = true;
+            const feeds = settings.get_strv(RSS_FEEDS_LIST_KEY);
+            for (let i = 0; i < feeds.length; i++) {
+                // activatable: false — prevents row from capturing button clicks
+                const row = new Adw.ActionRow({title: feeds[i], activatable: false});
 
-            _entry.connect("changed", ()=> {
-                if (_entry.get_text().length === 0)
-                    _okButton.sensitive = false;
-                else
-                    _okButton.sensitive = true;
-            });
-            dialog.add_action_widget(_entry,2);
-            
-            //dialog.add_action_widget(new Gtk.Button({label:'Return',icon_name :'gtk-cancel'}) , 0); 
-            dialog.add_action_widget(new Gtk.Button({label:'Return'}) , 0); 
-            //let _okButton =new Gtk.Button({label:'OK',icon_name:'gtk-ok'}) ;
-            let _okButton =new Gtk.Button({label:'OK'}) ;
-            dialog.add_action_widget(_okButton , 1); 
-            dialog.set_default_response(1);
-
-            dialog.connect("response", (w, response_id)=> {
-                if (response_id) {  // button OK
-                    onOkButton(_entry.get_text());
-                }
-                dialog.hide();
-            });
-            dialog.show();
-        }
-
-        createNew() {
-            this.createDialog(_("New Feed source"), '', (egtxt) =>{
-                if (egtxt==''){
-                    return;
-                }
-                // update tree view
-                let iter = this.feedstore.append();
-                this.feedstore.set_value(iter, COLUMN_ID, egtxt);
-                
-                // update this.settings
-                let feeds = this.settings.get_strv(RSS_FEEDS_LIST_KEY);
-                if (feeds == null)
-                    feeds = new Array();
-
-                feeds.push(egtxt);
-                this.settings.set_strv(RSS_FEEDS_LIST_KEY, feeds);
-                this.settings.set_boolean("torefresh", true);  
-            });
-        }
-
-        editSelected() {// update tree view
-            let [any, model, iter] = this.widget2.get_selection().get_selected();
-
-            if (any) {
-                this.createDialog(_("Edit Feed source"), model.get_value(iter, COLUMN_ID),  (egtxt) =>{
-                    if (egtxt==''){
-                        return;
-                    }
-                    this.feedstore.set_value(iter, COLUMN_ID, egtxt);
-
-                    // update this.settings
-                    let index = model.get_path(iter).get_indices();
-                    let feeds = this.settings.get_strv(RSS_FEEDS_LIST_KEY);
-                    if (feeds == null)
-                        feeds = new Array();
-
-                    if (index < feeds.length) {
-                        feeds[index] = egtxt;
-                        this.settings.set_strv(RSS_FEEDS_LIST_KEY, feeds);
-                    }
-                    this.settings.set_boolean("torefresh", true); 
+                const editBtn = new Gtk.Button({
+                    icon_name: 'document-edit-symbolic',
+                    valign: Gtk.Align.CENTER,
+                    css_classes: ['flat'],
                 });
+                editBtn.connect('clicked', () => {
+                    this._showEditDialog(window, settings, i, _rebuildFeedRows);
+                });
+
+                const delBtn = new Gtk.Button({
+                    icon_name: 'user-trash-symbolic',
+                    valign: Gtk.Align.CENTER,
+                    css_classes: ['flat'],
+                });
+                delBtn.connect('clicked', () => {
+                    let f = settings.get_strv(RSS_FEEDS_LIST_KEY);
+                    f.splice(i, 1);
+                    settings.set_strv(RSS_FEEDS_LIST_KEY, f);
+                    _rebuildFeedRows();
+                });
+
+                row.add_suffix(editBtn);
+                row.add_suffix(delBtn);
+                listBox.append(row);
             }
-        }
-            
-        deleteSelected() {
-            let [any, model, iter] = this.widget2.get_selection().get_selected();
-            if (any) {
-                 let index = model.get_path(iter).get_indices();
-                this.feedstore.remove(iter);
-                // update this.settings
-                let feeds = this.settings.get_strv(RSS_FEEDS_LIST_KEY);
-                if (feeds == null)
-                    feeds = new Array();
+        };
 
-                if (index < feeds.length) {
-                    feeds.splice(index, 1);
-                    this.settings.set_strv(RSS_FEEDS_LIST_KEY, feeds);
-                }
+        _rebuildFeedRows();
+
+        // Add button
+        const addGroup = new Adw.PreferencesGroup();
+        const addBtn = new Gtk.Button({
+            label: _('Add Feed'),
+            icon_name: 'list-add-symbolic',
+            css_classes: ['suggested-action'],
+            halign: Gtk.Align.CENTER,
+        });
+        addBtn.connect('clicked', () => {
+            this._showAddDialog(window, settings, _rebuildFeedRows);
+        });
+        addGroup.add(addBtn);
+        feedsPage.add(addGroup);
+    }
+
+    // Modal dialog for adding a new feed URL
+    _showAddDialog(parentWindow, settings, rebuild) {
+        const dialog = new Adw.MessageDialog({
+            transient_for: parentWindow,
+            heading: _('New Feed source'),
+            body: _('Enter feed URL:'),
+        });
+
+        const entry = new Gtk.Entry({
+            placeholder_text: 'https://example.com/feed.xml',
+            width_chars: 50,
+        });
+        dialog.set_extra_child(entry);
+
+        dialog.add_response('cancel', _('Cancel'));
+        dialog.add_response('add', _('Add'));
+        dialog.set_response_appearance('add', Adw.ResponseAppearance.SUGGESTED);
+        dialog.set_default_response('add');
+        dialog.set_close_response('cancel');
+
+        entry.connect('changed', () => {
+            dialog.set_response_enabled('add', entry.get_text().length > 0);
+        });
+        dialog.set_response_enabled('add', false);
+
+        // Save text before destroy() — GTK may invalidate entry on close
+        dialog.connect('response', (_dlg, response) => {
+            const text = entry.get_text();
+            dialog.destroy();
+            if (response === 'add' && text.length > 0) {
+                let feeds = settings.get_strv(RSS_FEEDS_LIST_KEY);
+                feeds.push(text);
+                settings.set_strv(RSS_FEEDS_LIST_KEY, feeds);
+                rebuild();
             }
-        }
+        });
 
-        loadStoreFromsettings() {
-            let feeds = this.settings.get_strv(RSS_FEEDS_LIST_KEY);
-            if (feeds) {
-                for (let i = 0; i < feeds.length; i++) {
-                    if (feeds[i]) { // test on empty string
-                        let iter = this.feedstore.append();
-                        this.feedstore.set_value(iter, COLUMN_ID, feeds[i]);
-                    }
-                }
+        dialog.present();
+    }
+
+    // Modal dialog for editing an existing feed URL
+    _showEditDialog(parentWindow, settings, index, rebuild) {
+        const feeds = settings.get_strv(RSS_FEEDS_LIST_KEY);
+        const dialog = new Adw.MessageDialog({
+            transient_for: parentWindow,
+            heading: _('Edit Feed source'),
+            body: _('Edit feed URL:'),
+        });
+
+        const entry = new Gtk.Entry({
+            text: feeds[index],
+            width_chars: 50,
+        });
+        dialog.set_extra_child(entry);
+
+        dialog.add_response('cancel', _('Cancel'));
+        dialog.add_response('save', _('Save'));
+        dialog.set_response_appearance('save', Adw.ResponseAppearance.SUGGESTED);
+        dialog.set_default_response('save');
+        dialog.set_close_response('cancel');
+
+        entry.connect('changed', () => {
+            dialog.set_response_enabled('save', entry.get_text().length > 0);
+        });
+
+        // Save text before destroy() — GTK may invalidate entry on close
+        dialog.connect('response', (_dlg, response) => {
+            const text = entry.get_text();
+            dialog.destroy();
+            if (response === 'save' && text.length > 0) {
+                let f = settings.get_strv(RSS_FEEDS_LIST_KEY);
+                f[index] = text;
+                settings.set_strv(RSS_FEEDS_LIST_KEY, f);
+                rebuild();
             }
-        }
+        });
 
-
-});   
-   
-
+        dialog.present();
+    }
+}

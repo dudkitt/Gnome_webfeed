@@ -1,4 +1,4 @@
-# WebFeed GNOME Shell extension translation template
+# Ukrainian translation for WebFeed GNOME Shell extension
 # Copyright (C) 2024 WebFeed contributors
 # This file is distributed under the same license as the WebFeed package.
 #
@@ -7,114 +7,115 @@ msgstr ""
 "Project-Id-Version: webfeed 9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-01 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2024-12-01 00:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: extension.js
 msgid "( "
-msgstr ""
+msgstr "( "
 
 #: extension.js
 msgid "H ago) "
-msgstr ""
+msgstr "год тому) "
 
 #: extension.js
 msgid "No data available"
-msgstr ""
+msgstr "Немає даних"
 
 #: extension.js
 msgid " has not responded "
-msgstr ""
+msgstr " не відповів "
 
 #: extension.js
 msgid "Last update"
-msgstr ""
+msgstr "Оновлено"
 
 #: prefs.js
 msgid "General"
-msgstr ""
+msgstr "Загальні"
 
 #: prefs.js
 msgid "Timing"
-msgstr ""
+msgstr "Таймери"
 
 #: prefs.js
 msgid "Update interval (minutes)"
-msgstr ""
+msgstr "Інтервал оновлення (хвилини)"
 
 #: prefs.js
 msgid "0 = manual only"
-msgstr ""
+msgstr "0 = лише вручну"
 
 #: prefs.js
 msgid "Waiting delay for response (seconds)"
-msgstr ""
+msgstr "Очікування відповіді (секунди)"
 
 #: prefs.js
 msgid "Display"
-msgstr ""
+msgstr "Відображення"
 
 #: prefs.js
 msgid "RSS sources per page"
-msgstr ""
+msgstr "Джерел на сторінці"
 
 #: prefs.js
 msgid "Erase after (hours)"
-msgstr ""
+msgstr "Видаляти через (години)"
 
 #: prefs.js
 msgid "Notifications"
-msgstr ""
+msgstr "Сповіщення"
 
 #: prefs.js
 msgid "Duration of news (minutes)"
-msgstr ""
+msgstr "Термін новини (хвилини)"
 
 #: prefs.js
 msgid "Notification on news"
-msgstr ""
+msgstr "Сповіщати про новини"
 
 #: prefs.js
 msgid "Feeds"
-msgstr ""
+msgstr "Стрічки"
 
 #: prefs.js
 msgid "Feed sources"
-msgstr ""
+msgstr "Джерела стрічок"
 
 #: prefs.js
 msgid "Add Feed"
-msgstr ""
+msgstr "Додати стрічку"
 
 #: prefs.js
 msgid "New Feed source"
-msgstr ""
+msgstr "Нове джерело"
 
 #: prefs.js
 msgid "Enter feed URL:"
-msgstr ""
+msgstr "Введіть URL стрічки:"
 
 #: prefs.js
 msgid "Cancel"
-msgstr ""
+msgstr "Скасувати"
 
 #: prefs.js
 msgid "Add"
-msgstr ""
+msgstr "Додати"
 
 #: prefs.js
 msgid "Edit Feed source"
-msgstr ""
+msgstr "Редагувати джерело"
 
 #: prefs.js
 msgid "Edit feed URL:"
-msgstr ""
+msgstr "Змініть URL стрічки:"
 
 #: prefs.js
 msgid "Save"
-msgstr ""
+msgstr "Зберегти"

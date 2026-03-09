@@ -4,7 +4,7 @@
  */
 
 
-var RssParser=class RssParser  {
+export class RssParser {
     constructor(xmlBase){
         this.Items =[];
         this.Title ='';

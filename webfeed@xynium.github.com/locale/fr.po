@@ -1,43 +1,121 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# French translation for WebFeed GNOME Shell extension
+# Copyright (C) 2022 WebFeed contributors
+# This file is distributed under the same license as the WebFeed package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: webfeed 9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-08 13:55+0200\n"
-"PO-Revision-Date: 2022-09-22 15:30+0200\n"
+"POT-Creation-Date: 2024-12-01 00:00+0000\n"
+"PO-Revision-Date: 2024-12-01 00:00+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: French\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:299 extension.js:306
+#: extension.js
 msgid "( "
-msgstr "( il y à : "
+msgstr "( il y a : "
 
-#: extension.js:299 extension.js:306
+#: extension.js
 msgid "H ago) "
 msgstr "H) "
 
-#: extension.js:317
+#: extension.js
 msgid "No data available"
-msgstr "Pas de données disponnibles"
+msgstr "Pas de données disponibles"
 
-#: prefs.js:138
+#: extension.js
+msgid " has not responded "
+msgstr " n'a pas répondu "
+
+#: extension.js
+msgid "Last update"
+msgstr "Dernière mise à jour"
+
+#: prefs.js
+msgid "General"
+msgstr "Général"
+
+#: prefs.js
+msgid "Timing"
+msgstr "Minuterie"
+
+#: prefs.js
+msgid "Update interval (minutes)"
+msgstr "Intervalle de mise à jour (minutes)"
+
+#: prefs.js
+msgid "0 = manual only"
+msgstr "0 = manuel uniquement"
+
+#: prefs.js
+msgid "Waiting delay for response (seconds)"
+msgstr "Délai d'attente de réponse (secondes)"
+
+#: prefs.js
+msgid "Display"
+msgstr "Affichage"
+
+#: prefs.js
+msgid "RSS sources per page"
+msgstr "Sources RSS par page"
+
+#: prefs.js
+msgid "Erase after (hours)"
+msgstr "Supprimer après (heures)"
+
+#: prefs.js
+msgid "Notifications"
+msgstr "Notifications"
+
+#: prefs.js
+msgid "Duration of news (minutes)"
+msgstr "Durée des nouvelles (minutes)"
+
+#: prefs.js
+msgid "Notification on news"
+msgstr "Notification de nouvelles"
+
+#: prefs.js
+msgid "Feeds"
+msgstr "Flux"
+
+#: prefs.js
+msgid "Feed sources"
+msgstr "Sources de flux"
+
+#: prefs.js
+msgid "Add Feed"
+msgstr "Ajouter un flux"
+
+#: prefs.js
 msgid "New Feed source"
 msgstr "Nouvelle source"
 
-#: prefs.js:162
-msgid "Edit Feed source"
-msgstr "Modifie la source"
+#: prefs.js
+msgid "Enter feed URL:"
+msgstr "Entrez l'URL du flux :"
 
-#: prefs.js:252
-msgid " has not responded "
-msgstr " n'a pas repondu "
+#: prefs.js
+msgid "Cancel"
+msgstr "Annuler"
+
+#: prefs.js
+msgid "Add"
+msgstr "Ajouter"
+
+#: prefs.js
+msgid "Edit Feed source"
+msgstr "Modifier la source"
+
+#: prefs.js
+msgid "Edit feed URL:"
+msgstr "Modifier l'URL du flux :"
+
+#: prefs.js
+msgid "Save"
+msgstr "Enregistrer"
